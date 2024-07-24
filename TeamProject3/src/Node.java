@@ -6,7 +6,7 @@ public class Node {
     boolean isOperator;
     Node left, right;
 
-    // Constructor for numbers
+    // Constructor for numbers/operands
     public Node(int number) {
         this.value = String.valueOf(number);
         this.isOperator = false;
@@ -35,19 +35,31 @@ public class Node {
         };
     }
 
+    /** Checks if Operator could have a proceding operator ( >=, <=, ==, !=, &&, || )
+        @param firstOp: Current Operator being parced
+        @param secondOp: The following Character in the expression
+        @return: True if matching pair is found
+    */
     public static boolean isOperatorPair(char firstOp, char secondOp) {
         String pair = "" + firstOp + secondOp;
         return pair.equals("&&") || pair.equals("||") || pair.equals(">=") || pair.equals("<=") ||
                pair.equals("==") || pair.equals("!=");
     }
 
+    /** Gets the current nodes value as an Integer
+        @return Nodes value as Integer
+    */
     public int getIntValue() {
         if (isOperator) {
             throw new IllegalStateException("Cannot get int value of an operator node");
         }
         return Integer.parseInt(value);
     }
-
+    /** Uses current node and gives it two children
+        @param leftOperand: left child of the node
+        @param rightOperand: right child of the node
+        @return Root Node of the new subtree
+    */
     public Node createSubtree(Node leftOperand, Node rightOperand) {
         this.left = leftOperand;
         this.right = rightOperand;
